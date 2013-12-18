@@ -8,9 +8,9 @@ public class Record {
 	
 	private Date date;
 	
-	private RecordTypeEnum type;
+	private String type;
 
-	public Record(String name, Date date, RecordTypeEnum type) {
+	public Record(String name, Date date, String type) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -25,7 +25,7 @@ public class Record {
 		return date;
 	}
 
-	public RecordTypeEnum getType() {
+	public String getType() {
 		return type;
 	}
 	

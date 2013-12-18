@@ -1,7 +1,5 @@
 package com.example.adapter;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.graphics.Typeface;
@@ -12,22 +10,21 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.dto.Record;
-import com.example.dto.RecordTypeEnum;
 import com.example.remindersapp.R;
 import com.example.utils.CommonUtils;
 
 public class RemindersAdapter extends BaseAdapter{
 
-	private List<Record> records = new ArrayList<Record>();
+	private List<Record> reminders;
 	
 	@Override
 	public int getCount() {
-		return records.size();
+		return reminders.size();
 	}
 
 	@Override
 	public Object getItem(int index) {
-		return records.get(index);
+		return reminders.get(index);
 	}
 
 	@Override
@@ -43,7 +40,7 @@ public class RemindersAdapter extends BaseAdapter{
 			view = inflater.inflate(R.layout.reminder_list_item, parent, false);
 		}
 		
-		Record reminderRecord = records.get(index);
+		Record reminderRecord = reminders.get(index);
 		
 		TextView name = (TextView) view.findViewById(R.id.textView1);
 		name.setText(reminderRecord.getName());
@@ -52,17 +49,14 @@ public class RemindersAdapter extends BaseAdapter{
 		date.setText(CommonUtils.formatDate(reminderRecord.getDate()));
 		
 		TextView type = (TextView) view.findViewById(R.id.textView3);
-		type.setText(reminderRecord.getType().toString());
+		type.setText(reminderRecord.getType());
 		type.setTypeface(Typeface.MONOSPACE);
 		
 		return view;
 	}
 
-	public RemindersAdapter()
+	public RemindersAdapter(List<Record> reminders)
 	{
-		Record testRecord = new Record("Record One", new Date(), RecordTypeEnum.ANNIVERSARY);
-		Record testRecord2 = new Record("Record Two", new Date(), RecordTypeEnum.BIRTHDAY);
-		records.add(testRecord);
-		records.add(testRecord2);
+		this.reminders = reminders;
 	}
 }
