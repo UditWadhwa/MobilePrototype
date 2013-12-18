@@ -1,15 +1,24 @@
 package com.example.remindersapp;
 
+import com.example.adapter.RemindersAdapter;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
+	RemindersAdapter remindersAdapter;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        ListView list = (ListView) findViewById(R.id.listView1);
+        remindersAdapter = new RemindersAdapter();
+        list.setAdapter(remindersAdapter);
     }
 
 
