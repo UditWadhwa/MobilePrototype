@@ -75,4 +75,13 @@ public class RemindersAdapter extends BaseAdapter{
 	{
 		this.reminders = reminders;
 	}
+
+	public void setReminders(List<Record> reminders) {
+		this.reminders = reminders;
+	}
+
+	public List<Record> getReminders() {
+		return reminders;
+	}
+	
 }

@@ -5,7 +5,12 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.adapter.RemindersAdapter;
 import com.example.dto.Record;
@@ -34,14 +39,33 @@ public class MainActivity extends Activity {
 		}
         remindersAdapter = new RemindersAdapter(reminders);
         list.setAdapter(remindersAdapter);
+        
+        list.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view,
+					int arg2, long arg3) {
+				Toast.makeText(view.getContext(), "Delete: To be implemented", Toast.LENGTH_LONG).show();
+				return true;
+			}
+		});
     }
 
 
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+    	super.onCreateOptionsMenu(menu);
+    	menu.add("Sort by date");
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	remindersAdapter.setReminders(CommonUtils.sortRemindersByDate(remindersAdapter.getReminders()));
+    	remindersAdapter.notifyDataSetChanged();
+		return true;
+    	
     }
     
 }
