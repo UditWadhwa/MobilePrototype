@@ -9,20 +9,32 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.dto.Record;
+import com.example.dto.RecordTypeEnum;
 
 public class CommonUtils {
 
-	private static DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private static DateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+	private static DateFormat DATEFORMAT_LONG = DateFormat.getDateInstance();
 	
-	public static String formatDate(Date date)
+	public static String formatDate(String date)
 	{
-		return DATEFORMAT.format(date);
+		Date displayDate = null;
+		try 
+		{
+			displayDate = DATEFORMAT.parse(date);
+			return DATEFORMAT_LONG.format(displayDate);
+		} 
+		catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static List<Record> getReminders(InputStream inputStream) throws ParseException
@@ -55,7 +67,7 @@ public class CommonUtils {
 			for(int i=0; i < reminders.length(); i++)
 			{
 				JSONObject reminder = reminders.getJSONObject(i);
-				records.add(new Record(reminder.getString("name"), DATEFORMAT.parse(reminder.getString("date")), reminder.getString("type")));
+				records.add(new Record(reminder.getString("name"), reminder.getString("date"), RecordTypeEnum.getEnumValue(reminder.getInt("type"))));
 			}
 		} 
 		catch (JSONException e) 

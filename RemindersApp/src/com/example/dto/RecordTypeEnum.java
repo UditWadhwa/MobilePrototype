@@ -15,4 +15,16 @@ public enum RecordTypeEnum {
 	{
 		return type;
 	}
+	
+	public static String getEnumValue(int type)
+	{
+		for(RecordTypeEnum recordTypeEnum : RecordTypeEnum.values())
+		{
+			if(type == recordTypeEnum.getType())
+			{
+				return recordTypeEnum.name();
+			}
+		}
+		return null;
+	}
 }
