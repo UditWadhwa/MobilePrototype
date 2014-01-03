@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.example.adapter.RemindersAdapter;
 import com.example.dto.Record;
+import com.example.remindersapp.AddReminderActivity;
+import com.example.remindersapp.MainActivity;
 import com.example.remindersapp.R;
 import com.example.utils.CommonUtils;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,12 +65,25 @@ public class RemindersListFragment extends Fragment
 	@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     	menu.add("Sort by date");
+    	menu.add("New");
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	remindersAdapter.setReminders(CommonUtils.sortRemindersByDate(remindersAdapter.getReminders()));
-    	remindersAdapter.notifyDataSetChanged();
+    	
+    	final String operation = item.getTitle().toString();
+    	
+    	if(operation.equalsIgnoreCase("Sort by Date")){
+    		remindersAdapter.setReminders(CommonUtils.sortRemindersByDate(remindersAdapter.getReminders()));
+    		remindersAdapter.notifyDataSetChanged();
+    	}
+    	else if(operation.equalsIgnoreCase("New")){
+    		
+    		Intent newReminderIntent = new Intent(this.getActivity(),AddReminderActivity.class);
+    		startActivity(newReminderIntent);
+    		
+    	}
+    	
 		return true;
     	
     }
