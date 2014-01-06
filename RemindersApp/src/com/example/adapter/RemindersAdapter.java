@@ -68,6 +68,7 @@ public class RemindersAdapter extends BaseAdapter{
 		{
 			image.setImageDrawable(anniversaryDrawable);
 		}
+		
 		return view;
 	}
 
