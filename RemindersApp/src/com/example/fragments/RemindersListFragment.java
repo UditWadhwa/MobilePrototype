@@ -2,6 +2,7 @@ package com.example.fragments;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.PendingIntent;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,11 +37,13 @@ public class RemindersListFragment extends Fragment
 	
 	private int selectedIndex;
 	
+	OnReminderSelectedListener callback;
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		
-		View fragmentView = inflater.inflate(R.layout.reminder_fragment, container);
+		View fragmentView = inflater.inflate(R.layout.reminder_fragment, container, false);
 		
 		ListView list = (ListView) fragmentView.findViewById(R.id.listView1);;
 		List<Record> reminders = null;
@@ -74,6 +78,16 @@ public class RemindersListFragment extends Fragment
 			}
 		});
         
+        list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position,
+					long id) {
+				callback.onReminderSelected(position);
+				
+			}
+		});
+        
         setHasOptionsMenu(true);
         
 		return fragmentView;
@@ -81,6 +95,7 @@ public class RemindersListFragment extends Fragment
 	
 	@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
     	menu.add("Sort by date");
     	menu.add("New");
     }
@@ -170,4 +185,23 @@ public class RemindersListFragment extends Fragment
 			}
 		}
 	};
+	
+	public interface OnReminderSelectedListener {
+		public void onReminderSelected(int position);
+	}
+	
+	@Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try 
+        {
+            callback = (OnReminderSelectedListener) activity;
+        } 
+        catch (ClassCastException e) 
+        {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnReminderSelectedListener");
+        }
+	}
+	
 }
