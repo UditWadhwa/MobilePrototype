@@ -39,6 +39,11 @@ public class RemindersListFragment extends Fragment
 	
 	OnReminderSelectedListener callback;
 	
+	public RemindersListFragment()
+	{
+		setHasOptionsMenu(true);
+	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -88,14 +93,13 @@ public class RemindersListFragment extends Fragment
 			}
 		});
         
-        setHasOptionsMenu(true);
-        
 		return fragmentView;
 	}
 	
 	@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+		//Need to remove this. Orientation change is adding fragment twice currently.
+		menu.clear();
     	menu.add("Sort by date");
     	menu.add("New");
     }

@@ -15,14 +15,20 @@ public class ReminderViewFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		View fragmentView = inflater.inflate(R.layout.reminder_view_fragment, container, false);
+		Bundle bundle = this.getArguments();
+		int position = bundle != null ? bundle.getInt("position", -1) : -1;
+		if(position != -1)
+		{
+			updateView(position, fragmentView);
+		}
 		return fragmentView;
 	}
 	
-	public void updateView(int position)
+	public void updateView(int position, View view)
 	{
-		View fragment = this.getView();
-		TextView text = (TextView) fragment.findViewById(R.id.textView1);
+		TextView text = (TextView) view.findViewById(R.id.textView1);
 		text.setText("You are viewing record " + (position + 1));
 		
 	}
+
 }

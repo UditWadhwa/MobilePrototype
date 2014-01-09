@@ -32,6 +32,9 @@ public class MainActivity extends Activity implements OnReminderSelectedListener
 		if (findViewById(R.id.mainLayout) != null)
 		{
 			displayFragment = new ReminderViewFragment();
+			Bundle bundle = new Bundle();
+			bundle.putInt("position", position);
+			displayFragment.setArguments(bundle);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.mainLayout, displayFragment);
             transaction.addToBackStack(null);
@@ -40,7 +43,7 @@ public class MainActivity extends Activity implements OnReminderSelectedListener
 		else
 		{
 			displayFragment = (ReminderViewFragment) this.getFragmentManager().findFragmentById(R.id.fragment2);
-			displayFragment.updateView(position);
+			displayFragment.updateView(position, displayFragment.getView());
 		}
 	}
     
